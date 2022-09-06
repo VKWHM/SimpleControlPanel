@@ -26,3 +26,37 @@ body {
 .login .btn {
     background-color: #008dde;
 } 
+/* End Login Page */
+
+/* Start Navbar Page */
+.navbar {
+    margin-bottom: 0px;
+    border-radius: 0px;
+}
+.navbar-brand,
+.nav > li > a {
+    padding: 15px 12px;
+}
+
+.navbar-brand {
+    font-size: 1em;
+}
+
+.navbar-inverse .navbar-nav > .open > a,
+.navbar-inverse .navbar-nav > .open > a:focus,
+.navbar-inverse .navbar-nav > .open > a:hover,
+.dropdown-menu {
+    background-color: #3498db;
+}
+
+.dropdown-menu {
+    min-width: 185px;
+    border-radius: 10px;
+}
+
+.dropdown-menu > li > a {
+    color: #fff
+}
+
+/* End Navbar Page */
+
