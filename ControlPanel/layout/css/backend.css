@@ -60,3 +60,30 @@ body {
 
 /* End Navbar Page */
 
+/* Start Form Edit Page */
+h1 {
+    margin: 15px 0;
+    font-size: 50px;
+    font-weight: bold;
+    color: #666;
+}
+.form-group {
+    padding-bottom: 45px;
+}
+.form-group > label {
+    text-align: center;
+    margin-block: 14px;
+}
+/* End Form Edit Page */
+
+
+
+
+
+
+
+
+
+
+
+

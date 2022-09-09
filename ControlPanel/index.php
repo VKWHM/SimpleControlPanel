@@ -5,6 +5,7 @@
         exit();
     }
     $noNavBar = '';
+    $pageTitle = "Login";
     include "ini.php";
 
     // Check If User Coming From Post Request
@@ -15,10 +16,12 @@
         $hashedPass = sha1($password);
 
         // Check IF User Exist In Database
-        $stmt = $db->prepare('SELECT Username, Password FROM users WHERE Username= ? AND Password = ? AND GroupID = 1');
+        $stmt = $db->prepare('SELECT UserID, Username, Password FROM users WHERE Username= ? AND Password = ? AND GroupID = 1 LIMIT 1');
         $stmt->execute(array($username, $hashedPass));
+        $row = $stmt->fetch();
         if ($stmt->rowCount() > 0) {
-            $_SESSION['Username'] = $username;
+            $_SESSION['Username'] = $username; // Register Username 
+            $_SESSION['ID'] = $row['UserID']; // Register User ID
             header('Location: dashboard.php');
             exit();
         }
