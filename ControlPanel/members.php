@@ -93,9 +93,43 @@
                 $username = $_POST["username"];
                 $email = $_POST["email"];
                 $fname = $_POST["fname"];
-                $password = empty($_POST["newPassword"]) ? $_POST['oldPassword'] : password_hash($_POST['newPassword'], PASSWORD_BCRYPT);
-                $argument = array($username, $email, $fname, $password, $id);
 
+                // Password Trick
+                $password = empty($_POST["newPassword"]) ? $_POST['oldPassword'] : password_hash($_POST['newPassword'], PASSWORD_BCRYPT);
+
+                // Validate Form
+
+                $formErrors = array();
+                
+                if (strlen($username) < 4) {
+                    $formErrors[] = 'Username Cant Be Less Then 4 Character'; 
+                }
+
+                if (strlen($username) > 20) {
+                    $formErrors[] = 'Username Cant Be More Then 20 Character'; 
+                }
+
+                if (empty($username)) {
+                    $formErrors[] = 'Username Cant Be Empty'; 
+                }
+
+                if (empty($email)) {
+                    $formErrors[] = 'Email Cant Be empty';
+                }
+
+                if (empty($fname)) {
+                    $formErrors[] = 'Full Name Cant Be empty';
+                }
+
+                if ($formErrors) {
+                    foreach ($formErrors as $error) {
+                        echo $error . '<br>';
+                    }
+                    exit;
+                }
+
+
+                $argument = array($username, $email, $fname, $password, $id);
                 // Update Data
 
                 $stmt = $db->prepare("UPDATE users SET Username = ?, Email = ?, FullName = ?, Password = ? WHERE UserID = ?");
