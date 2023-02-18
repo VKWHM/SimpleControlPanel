@@ -14,8 +14,60 @@
     $do = isset($_GET["do"]) ? $_GET["do"] : "Manage";
 
     switch ($do) {
-        case "Add":
-            echo "Add Section";
+
+        case "Add": ?> 
+                <h1 class="text-center">Add New Member</h1>
+                <div class="container">
+
+                    <form class="form-horziontal" action="?do=Insert" method="POST">
+                        <!--Start Username Input-->
+                        <div class="form-group form-group-lg">
+                            <label class="col-sm-2 col-sm-offset-1 control-label" for="">Username</label>
+                            <div class="col-sm-7">
+                            <input class="form-control" type="text" name="username"  autocomplete="off" required='required' placeholder='Username To Login Into Shop'>
+                            </div>
+                        </div>
+                        <!--End Username Input-->
+
+                        <!--Start Password Input-->
+                        <div class="form-group form-group-lg">
+                            <label class="col-sm-2 col-sm-offset-1 control-label" for="">Password</label>
+                            <div class="col-sm-7">
+                                <input class="form-control" type="password" name="newPassword" autocomplete="new-password" required='required' placeholder='Password Must Be Hard & Complex'>
+                            </div>
+                        </div>
+                        <!--End Pasword Input-->
+
+                        <!--Start Email Input-->
+                        <div class="form-group form-group-lg">
+                            <label class="col-sm-2 col-sm-offset-1 control-label" for="">Email</label>
+                            <div class="col-sm-7">
+                                <input class="form-control" type="email" name="email" autocomplete="off" required='required' placeholder='Email Must Be Valid'>
+                            </div>
+                        </div>
+                        <!--End Email Input-->
+
+                        <!--Start Full Name Input-->
+                        <div class="form-group form-group-lg">
+                            <label class="col-sm-2 col-sm-offset-1 control-label" for="">Full Name</label>
+                            <div class="col-sm-7">
+                                <input class="form-control" type="text" name="fname" autocomplete="off" required='required' placeholder='Full Name Appear In You Profile Page'>
+                            </div>
+                        </div>
+                        <!--End Full Name Input-->
+
+                        <!--Start Submit Buttom-->
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-7">
+                                <input class="btn btn-primary btn-lg" type="submit" value="Insert">
+                            </div>
+                        </div>
+                        <!--End Submit Buttom-->
+                    </form>
+                </div>
+      <?php break;
+        case "Insert":
+            echo 'hello';
             break;
         case "Edit":
             // Check If Request has userid and is numaric & get integer value from of it
@@ -143,9 +195,9 @@
             }
             break;
         case "Manage":
-        default:
-            echo "Manage Section";
-            break;
+        default: ?> 
+            <a href="members.php?do=Add">Add New Member</a>
+      <?php break;
     }
 
 
