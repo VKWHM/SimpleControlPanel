@@ -74,6 +74,16 @@ h1 {
     text-align: center;
     margin-block: 14px;
 }
+.form-control {
+    position: relative;
+}
+.asterisk {
+    position: absolute;
+    font-size: 25px;
+    right: 30px;
+    top:12px;
+    color:#9b0000;
+}
 /* End Form Edit Page */
 
 

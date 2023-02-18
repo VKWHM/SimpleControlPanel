@@ -36,7 +36,7 @@
                         <div class="form-group form-group-lg">
                             <label class="col-sm-2 col-sm-offset-1 control-label" for="">Username</label>
                             <div class="col-sm-7">
-                            <input class="form-control" type="text" name="username" value=<?php echo $row["Username"] ?> autocomplete="off">
+                            <input class="form-control" type="text" name="username" value=<?php echo $row["Username"] ?> autocomplete="off" required='required'>
                             </div>
                         </div>
                         <!--End Username Input-->
@@ -45,7 +45,7 @@
                         <div class="form-group form-group-lg">
                             <label class="col-sm-2 col-sm-offset-1 control-label" for="">Password</label>
                             <div class="col-sm-7">
-                                <input class="form-control" type="password" name="newPassword" autocomplete="new-password">
+                                <input class="form-control" type="password" name="newPassword" autocomplete="new-password" placeholder="Leave Blank If You Don't Want To Change">
                                 <input class="form-control" type="hidden" name="oldPassword" value="<?php echo $row['Password'] ?>">
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                         <div class="form-group form-group-lg">
                             <label class="col-sm-2 col-sm-offset-1 control-label" for="">Email</label>
                             <div class="col-sm-7">
-                                <input class="form-control" type="email" name="email" value=<?php echo $row["Email"] ?> autocomplete="off">
+                                <input class="form-control" type="email" name="email" value=<?php echo $row["Email"] ?> autocomplete="off" required='required'>
                             </div>
                         </div>
                         <!--End Email Input-->
@@ -64,7 +64,7 @@
                         <div class="form-group form-group-lg">
                             <label class="col-sm-2 col-sm-offset-1 control-label" for="">Full Name</label>
                             <div class="col-sm-7">
-                                <input class="form-control" type="text" name="fname" value=<?php echo $row["FullName"] ?> autocomplete="off">
+                                <input class="form-control" type="text" name="fname" value='<?php echo $row["FullName"] ?>' autocomplete="off" required='required'>
                             </div>
                         </div>
                         <!--End Full Name Input-->
@@ -85,9 +85,11 @@
         case "Delete":
             echo "Delete Section";
             break;
-        case "Update":
-            if ($_SERVER['REQUEST_METHOD'] === "POST") {
+        case "Update": ?>
+            <h1 class="text-center">Update Member</h1>
+            <div class="container">
 
+        <?php if ($_SERVER['REQUEST_METHOD'] === "POST") {
                 // Get Post Item
                 $id = $_POST["userid"];
                 $username = $_POST["username"];
@@ -123,20 +125,20 @@
 
                 if ($formErrors) {
                     foreach ($formErrors as $error) {
-                        echo $error . '<br>';
+                        echo "<div class='alert alert-danger'>$error</div>";
                     }
-                    exit;
-                }
+                } else {
+                    $argument = array($username, $email, $fname, $password, $id);
+                    // Update Data
 
+                    $stmt = $db->prepare("UPDATE users SET Username = ?, Email = ?, FullName = ?, Password = ? WHERE UserID = ?");
+                    $stmt->execute($argument);
+                    echo "<div class='alert alert-success'>" .$stmt->rowCount() . " Record Updated". "</div>";
+                } ?>
 
-                $argument = array($username, $email, $fname, $password, $id);
-                // Update Data
+            </div>
 
-                $stmt = $db->prepare("UPDATE users SET Username = ?, Email = ?, FullName = ?, Password = ? WHERE UserID = ?");
-                $stmt->execute($argument);
-                echo $stmt->rowCount() . " Record Updated";
-
-            } else {
+        <?php } else {
                 header("Location: members.php?do=Manage");
             }
             break;
