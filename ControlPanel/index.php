@@ -13,13 +13,12 @@
 
         $username = $_POST["user"];
         $password = $_POST["pass"];
-        $hashedPass = sha1($password);
 
         // Check IF User Exist In Database
-        $stmt = $db->prepare('SELECT UserID, Username, Password FROM users WHERE Username= ? AND Password = ? AND GroupID = 1 LIMIT 1');
-        $stmt->execute(array($username, $hashedPass));
+        $stmt = $db->prepare('SELECT UserID, Username, Password FROM users WHERE Username= ? AND GroupID = 1 LIMIT 1');
+        $stmt->execute(array($username));
         $row = $stmt->fetch();
-        if ($stmt->rowCount() > 0) {
+        if ($stmt->rowCount() > 0 && password_verify($password, $row['Password'])) {
             $_SESSION['Username'] = $username; // Register Username 
             $_SESSION['ID'] = $row['UserID']; // Register User ID
             header('Location: dashboard.php');

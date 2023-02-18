@@ -23,9 +23,7 @@
             $stmt = $db->prepare("SELECT * FROM users WHERE UserID = ?");
             $stmt->execute(array($userid));
             $row = $stmt->fetch();
-            if ($stmt->rowCount() > 0) {
-
-?>
+            if ($stmt->rowCount() > 0) { ?>
                 <h1 class="text-center">Edit Member</h1>
 
                 <div class="container">
@@ -47,7 +45,8 @@
                         <div class="form-group form-group-lg">
                             <label class="col-sm-2 col-sm-offset-1 control-label" for="">Password</label>
                             <div class="col-sm-7">
-                                <input class="form-control" type="password" name="password" autocomplete="new-password">
+                                <input class="form-control" type="password" name="newPassword" autocomplete="new-password">
+                                <input class="form-control" type="hidden" name="oldPassword" value="<?php echo $row['Password'] ?>">
                             </div>
                         </div>
                         <!--End Pasword Input-->
@@ -79,8 +78,7 @@
                         <!--End Submit Buttom-->
                     </form>
                 </div>
-            <?php
-                } else {
+            <?php } else {
                     echo "Theres No Such ID";
                 }
                 break;
@@ -95,18 +93,12 @@
                 $username = $_POST["username"];
                 $email = $_POST["email"];
                 $fname = $_POST["fname"];
-                $argument = array($username, $email, $fname, $id);
-                $password = empty($_POST["password"]) ? False : sha1($_POST['password']);
+                $password = empty($_POST["newPassword"]) ? $_POST['oldPassword'] : password_hash($_POST['newPassword'], PASSWORD_BCRYPT);
+                $argument = array($username, $email, $fname, $password, $id);
 
-                if ($password) {
-                    $passQuery = " Password = ?,";
-                    array_unshift($argument, $password);
-                } else {
-                    $passQuery = "";
-                }
                 // Update Data
 
-                $stmt = $db->prepare("UPDATE users SET $passQuery Username = ?, Email = ?, FullName = ? WHERE UserID = ?");
+                $stmt = $db->prepare("UPDATE users SET Username = ?, Email = ?, FullName = ?, Password = ? WHERE UserID = ?");
                 $stmt->execute($argument);
                 echo $stmt->rowCount() . " Record Updated";
 
@@ -119,10 +111,6 @@
             echo "Manage Section";
             break;
     }
-
-    
-
-
 
 
     include $tpl . "footer.php";
