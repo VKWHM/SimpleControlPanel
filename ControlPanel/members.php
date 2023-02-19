@@ -143,12 +143,13 @@
                 </div>
 
             <?php } else {
-                    header("Location: members.php?do=Manage");
+                    $msg = 'Sorry You Can\'t Browse This Page Directly';
+                    redirect_home($msg);
                 }
                 break;
             case "Edit":
                 // Check If Request has userid and is numaric & get integer value from of it
-                $userid = isset($_GET["userid"]) && is_numeric($_GET['userid']) ? $_GET['userid'] : 0;
+                $userid = isset($_GET["userid"]) && is_numeric($_GET['userid']) ? (int)$_GET['userid'] : 0;
                 $stmt = $db->prepare("SELECT * FROM users WHERE UserID = ?");
                 $stmt->execute(array($userid));
                 $row = $stmt->fetch();
@@ -208,7 +209,8 @@
                         </form>
                     </div>
                 <?php } else {
-                        echo "Theres No Such ID";
+                        $msg =  "Theres No Such ID";
+                        redirect_home($msg, 3);
                     }
                     break;
             case "Update": ?>
@@ -264,14 +266,15 @@
                 </div>
 
             <?php } else {
-                    header("Location: members.php?do=Manage");
+                    $msg = 'Sorry You Can\'t Browse This Page Directly';
+                    redirect_home($msg);
                 }
                 break;
             case "Delete": ?>
                 <h1 class="text-center">Delete Member</h1>
                 <div class="container">
           <?php // Check If UserID is Integer And Check If It Exist In Database
-                $userid = isset($_GET["userid"]) && is_numeric($_GET['userid']) ? $_GET['userid'] : 0;
+                $userid = isset($_GET["userid"]) && is_numeric($_GET['userid']) ? (int)$_GET['userid'] : 0;
                 $stmt = $db->prepare("SELECT * FROM users WHERE UserID = ?");
                 $stmt->execute(array($userid));
                 $count = $stmt->rowCount();
@@ -282,7 +285,8 @@
                     $count = $stmt->rowCount();
                     echo "<div class='alert alert-success'>$count Record Deleted</div>";
                 } else {
-                    echo "<div class='alert alert-danger'>There Such ID Not Found</div>";
+                    $msg =  "There No Such ID Found";
+                    redirect_home($msg, 3);
                 } ?>
                 </div>
           <?php break;
