@@ -33,7 +33,8 @@
                         <div class="form-group form-group-lg">
                             <label class="col-sm-2 col-sm-offset-1 control-label" for="">Password</label>
                             <div class="col-sm-7">
-                                <input class="form-control" type="password" name="newPassword" autocomplete="new-password" required='required' placeholder='Password Must Be Hard & Complex'>
+                                <input class="form-control" type="password" name="password" autocomplete="new-password" required='required' placeholder='Password Must Be Hard & Complex'>
+                                <i class="show-pass fa fa-eye "></i>
                             </div>
                         </div>
                         <!--End Pasword Input-->
@@ -59,15 +60,86 @@
                         <!--Start Submit Buttom-->
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-7">
-                                <input class="btn btn-primary btn-lg" type="submit" value="Insert">
+                                <input class="btn btn-primary btn-lg" type="submit" value="Add Member">
                             </div>
                         </div>
                         <!--End Submit Buttom-->
                     </form>
                 </div>
       <?php break;
-        case "Insert":
-            echo 'hello';
+        case "Insert": ?>
+            <h1 class="text-center">Insert Member</h1>
+            <div class="container">
+
+        <?php if ($_SERVER['REQUEST_METHOD'] === "POST") {
+                // Get Post Item
+                $username = $_POST["username"];
+                $email = $_POST["email"];
+                $fname = $_POST["fname"];
+                $password = $_POST["password"];
+
+                // Validate Form
+
+                $formErrors = array();
+                
+                if (strlen($username) < 3) {
+                    $formErrors[] = 'Username Cant Be Less Then 4 Character'; 
+                }
+
+                if (strlen($username) > 20) {
+                    $formErrors[] = 'Username Cant Be More Then 20 Character'; 
+                }
+
+                if (empty($username)) {
+                    $formErrors[] = 'Username Cant Be Empty'; 
+                }
+
+                if (empty($password)) {
+                    $formErrors[] = 'Password Cant Be Empty';
+                }
+
+                if (strlen($password) < 3) {
+                    $formErrors[] = 'Password Cant Be Less Then 4 Character'; 
+                }
+
+                foreach (['/\w/', '/\d/', '/\W/'] as $pattern) {
+                    if (!preg_match($pattern, $password)) {
+                        $formErrors[] = 'Passwort Must Be More Complex An Adding Digit, Character And Special Character';
+                        break;
+                    }
+                }
+
+                if (empty($email)) {
+                    $formErrors[] = 'Email Cant Be empty';
+                }
+                    
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $formErrors[] = 'Invaild Email';
+                }
+
+                if (empty($fname)) {
+                    $formErrors[] = 'Full Name Cant Be empty';
+                }
+
+                if ($formErrors) {
+                    foreach ($formErrors as $error) {
+                        echo "<div class='alert alert-danger'>$error</div>";
+                    }
+                } else {
+                    $hashPass = password_hash($password, PASSWORD_BCRYPT);
+                    $argument = array($username, $email, $fname, $hashPass);
+                    // Update Data
+
+                    $stmt = $db->prepare("INSERT INTO users (Username, Email, FullName, Password) VALUES (?, ?, ?, ?);");
+                    $stmt->execute($argument);
+                    echo "<div class='alert alert-success'>" .$stmt->rowCount() . " Record Inserted". "</div>";
+                } ?>
+
+            </div>
+
+        <?php } else {
+                header("Location: members.php?do=Manage");
+            }
             break;
         case "Edit":
             // Check If Request has userid and is numaric & get integer value from of it
@@ -148,14 +220,11 @@
                 $email = $_POST["email"];
                 $fname = $_POST["fname"];
 
-                // Password Trick
-                $password = empty($_POST["newPassword"]) ? $_POST['oldPassword'] : password_hash($_POST['newPassword'], PASSWORD_BCRYPT);
-
                 // Validate Form
 
                 $formErrors = array();
-                
-                if (strlen($username) < 4) {
+
+                if (strlen($username) < 3) {
                     $formErrors[] = 'Username Cant Be Less Then 4 Character'; 
                 }
 
@@ -180,7 +249,9 @@
                         echo "<div class='alert alert-danger'>$error</div>";
                     }
                 } else {
-                    $argument = array($username, $email, $fname, $password, $id);
+                    // Password Trick
+                    $hashPass = empty($_POST["newPassword"]) ? $_POST['oldPassword'] : password_hash($_POST['newPassword'], PASSWORD_BCRYPT);
+                    $argument = array($username, $email, $fname, $hashPass);
                     // Update Data
 
                     $stmt = $db->prepare("UPDATE users SET Username = ?, Email = ?, FullName = ?, Password = ? WHERE UserID = ?");
