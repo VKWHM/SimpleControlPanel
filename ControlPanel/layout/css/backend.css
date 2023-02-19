@@ -91,6 +91,15 @@ h1 {
     font-size:20px;
 }
 /* End Form Edit Page */
+/* Members Page Table */
+.main-table > thead > tr > th {
+    text-align: center;
+    background-color: #333;
+    color: #FFF;
+}
+.main-table tr {
+    text-align: center;
+}
 
 
 

@@ -270,9 +270,72 @@
                 header("Location: members.php?do=Manage");
             }
             break;
-        case "Manage":
+        case "Manage": // Manage Members Page
         default: ?> 
-            <a href="members.php?do=Add">Add New Member</a>
+            <h1 class="text-center">Manage Members</h1>
+            <div class="container">
+            <div class="table-responsive">
+                <table class="main-table table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Full Name</th>
+                            <th>Registred Date</th>
+                            <th>Control</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <a class="btn btn-success" href="">Edit</a>
+                                <a class="btn btn-danger" href="">Delete</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <a class="btn btn-success" href="">Edit</a>
+                                <a class="btn btn-danger" href="">Delete</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <a class="btn btn-success" href="">Edit</a>
+                                <a class="btn btn-danger" href="">Delete</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <a class="btn btn-success" href="">Edit</a>
+                                <a class="btn btn-danger" href="">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+                <a class='btn btn-primary' href="members.php?do=Add"><i class="fa fa-plus"></i> Add New Member</a>
+            </div>
       <?php break;
     }
 
