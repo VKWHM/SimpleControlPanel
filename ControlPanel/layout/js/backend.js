@@ -18,3 +18,10 @@ $('.show-pass').hover(function() {
     let passField = $(this).parent().children('input');
     passField.attr('type', 'password');
 });
+
+
+// Confirmation Message On Button
+
+$('.confirm').click(function() {
+    return confirm('Are You Sure !');
+});

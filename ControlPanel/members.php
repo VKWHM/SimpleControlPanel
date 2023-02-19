@@ -211,9 +211,6 @@
                         echo "Theres No Such ID";
                     }
                     break;
-            case "Delete":
-                echo "Delete Section";
-                break;
             case "Update": ?>
                 <h1 class="text-center">Update Member</h1>
                 <div class="container">
@@ -270,6 +267,25 @@
                     header("Location: members.php?do=Manage");
                 }
                 break;
+            case "Delete": ?>
+                <h1 class="text-center">Delete Member</h1>
+                <div class="container">
+          <?php // Check If UserID is Integer And Check If It Exist In Database
+                $userid = isset($_GET["userid"]) && is_numeric($_GET['userid']) ? $_GET['userid'] : 0;
+                $stmt = $db->prepare("SELECT * FROM users WHERE UserID = ?");
+                $stmt->execute(array($userid));
+                $count = $stmt->rowCount();
+                if ($stmt->rowCount() > 0) {
+                    $stmt = $db->prepare('DELETE FROM users WHERE UserID = :userID');
+                    $stmt->bindParam(':userID', $userid);
+                    $stmt->execute();
+                    $count = $stmt->rowCount();
+                    echo "<div class='alert alert-success'>$count Record Deleted</div>";
+                } else {
+                    echo "<div class='alert alert-danger'>There Such ID Not Found</div>";
+                } ?>
+                </div>
+          <?php break;
             case "Manage": // Manage Members Page
             default: 
                 // Select All Users Expect Admins
@@ -301,7 +317,7 @@
                                 <td></td>
                                 <td>
                                     <a class="btn btn-success" href="members.php?do=Edit&userid=<?php echo $row['UserID'] ?>">Edit</a>
-                                    <a class="btn btn-danger" href="members.php?do=Delete&userid=<?php echo $row['UserID'] ?>">Delete</a>
+                                    <a class="btn btn-danger confirm" href="members.php?do=Delete&userid=<?php echo $row['UserID'] ?>">Delete</a>
                                 </td>
                             </tr>
             <?php } ?>
