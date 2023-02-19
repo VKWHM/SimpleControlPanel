@@ -113,7 +113,7 @@
                     $formErrors[] = 'Email Cant Be empty';
                 }
                     
-                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                if (!preg_match('/[a-zA-Z0-9\.]{1,}@[a-zA-Z0-9]{1,}\.[a-z]{1,}/', $email)) {
                     $formErrors[] = 'Invaild Email';
                 }
 
@@ -127,10 +127,15 @@
                     }
                 } else {
                     $hashPass = password_hash($password, PASSWORD_BCRYPT);
-                    $argument = array($username, $email, $fname, $hashPass);
+                    $argument = array(
+                        'user' => $username,
+                        'email' => $email,
+                        'fname' => $fname,
+                        'pass' => $hashPass
+                    );
                     // Update Data
 
-                    $stmt = $db->prepare("INSERT INTO users (Username, Email, FullName, Password) VALUES (?, ?, ?, ?);");
+                    $stmt = $db->prepare("INSERT INTO users (Username, Email, FullName, Password) VALUES (:user, :email, :fname, :pass);");
                     $stmt->execute($argument);
                     echo "<div class='alert alert-success'>" .$stmt->rowCount() . " Record Inserted". "</div>";
                 } ?>
