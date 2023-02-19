@@ -320,8 +320,8 @@
                                 <td><?php echo $row['FullName'] ?></td>
                                 <td></td>
                                 <td>
-                                    <a class="btn btn-success" href="members.php?do=Edit&userid=<?php echo $row['UserID'] ?>">Edit</a>
-                                    <a class="btn btn-danger confirm" href="members.php?do=Delete&userid=<?php echo $row['UserID'] ?>">Delete</a>
+                                    <a class="btn btn-success" href="members.php?do=Edit&userid=<?php echo $row['UserID'] ?>"><i class='fa fa-edit'></i> Edit</a>
+                                    <a class="btn btn-danger confirm" href="members.php?do=Delete&userid=<?php echo $row['UserID'] ?>"><i class='fa fa-close'></i> Delete</a>
                                 </td>
                             </tr>
             <?php } ?>

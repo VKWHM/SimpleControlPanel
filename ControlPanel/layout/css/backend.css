@@ -97,8 +97,21 @@ h1 {
     background-color: #333;
     color: #FFF;
 }
+.main-table {
+    -webkit-box-shadow: 0 1px 10px #CCC;
+    -mox-box-shadow: 0 1px 10px #CCC;
+    box-shadow: 0 1px 10px #CCC;
+}
+
 .main-table tr {
     text-align: center;
+}
+.main-table td {
+    background-color: #FFF;
+    vertical-align: middle !important;
+}
+.main-table .btn {
+    padding: 3px 10px;
 }
 
 
