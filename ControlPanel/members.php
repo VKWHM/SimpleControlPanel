@@ -139,7 +139,7 @@
                         );
                         // Update Data
 
-                        $stmt = $db->prepare("INSERT INTO users (Username, Email, FullName, Password) VALUES (:user, :email, :fname, :pass);");
+                        $stmt = $db->prepare("INSERT INTO users (Username, Email, FullName, Password, DateTime) VALUES (:user, :email, :fname, :pass, now());");
                         $stmt->execute($argument);
                         $msg =  "<div class='alert alert-success'>" .$stmt->rowCount() . " Record Inserted". "</div>";
                         redirectHome($msg, 'back');
@@ -329,7 +329,7 @@
                                 <td><?php echo $row['Username'] ?></td>
                                 <td><?php echo $row['Email'] ?></td>
                                 <td><?php echo $row['FullName'] ?></td>
-                                <td></td>
+                                <td><?php echo $row['DateTime'] ?></td>
                                 <td>
                                     <a class="btn btn-success" href="members.php?do=Edit&userid=<?php echo $row['UserID'] ?>"><i class='fa fa-edit'></i> Edit</a>
                                     <a class="btn btn-danger confirm" href="members.php?do=Delete&userid=<?php echo $row['UserID'] ?>"><i class='fa fa-close'></i> Delete</a>
