@@ -47,7 +47,7 @@ function checkItem($select, $from, $value) {
     $statement = $db->prepare("SELECT $select FROM $from WHERE $select = :value;");
     $statement->execute(array('value' => $value));
     $count = $statement->rowCount();
-    if ($count == 0) {
+    if ($count != 0) {
         return True;
     } 
     return False;

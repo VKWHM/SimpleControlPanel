@@ -121,7 +121,7 @@
                     if (empty($fname)) {
                         $formErrors[] = 'Full Name Cant Be empty';
                     }
-                    if (!checkItem('Username', 'users', $username)) {
+                    if (checkItem('Username', 'users', $username)) {
                         $formErrors[] = 'The Username Must Be Exists';
                     }
 
@@ -254,6 +254,9 @@
                     if (empty($fname)) {
                         $formErrors[] = 'Full Name Cant Be empty';
                     }
+                    if (checkItem('Username', 'users', $username)) {
+                        $formErrors[] = 'The Username Must Be Exists';
+                    }
 
                     if ($formErrors) {
                         foreach ($formErrors as $error) {
@@ -285,10 +288,7 @@
                 <div class="container">
           <?php // Check If UserID is Integer And Check If It Exist In Database
                 $userid = isset($_GET["userid"]) && is_numeric($_GET['userid']) ? (int)$_GET['userid'] : 0;
-                $stmt = $db->prepare("SELECT * FROM users WHERE UserID = ?");
-                $stmt->execute(array($userid));
-                $count = $stmt->rowCount();
-                if ($stmt->rowCount() > 0) {
+                if (checkItem('UserID', 'users', $userid)) {
                     $stmt = $db->prepare('DELETE FROM users WHERE UserID = :userID');
                     $stmt->bindParam(':userID', $userid);
                     $stmt->execute();
