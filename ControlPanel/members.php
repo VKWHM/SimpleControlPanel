@@ -10,6 +10,7 @@
      ** Manage Members Page
      ** You Can Add | Edit | Delete Members From Here
     */
+    $pageTitle = 'Members';
     include "ini.php";
     $do = isset($_GET["do"]) ? $_GET["do"] : "Manage";
 
@@ -119,6 +120,9 @@
 
                     if (empty($fname)) {
                         $formErrors[] = 'Full Name Cant Be empty';
+                    }
+                    if (!checkItem('Username', 'users', $username)) {
+                        $formErrors[] = 'The Username Must Be Exists';
                     }
 
                     if ($formErrors) {
