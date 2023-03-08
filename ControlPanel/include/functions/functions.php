@@ -17,15 +17,21 @@
     }
 /*
  * 
- * Redirect Function v1.0
+ * Redirect Function v2.0
  * [ This Function Accept Parameteres ]
- * $errorMsg = ehco The Error Message
+ * $theMsg = Echo The Message [Error, Success, Warning]
+ * $url = The Link You Want To Redirect To
  * $seconds = Seconds Before Redirecting
  */
-function redirect_home($errMsg, $sec = 3) {
-    echo "<div class='alert alert-danger'>$errMsg </div>";
-    echo "<div class='alert alert-info'> You Will Be Redirect To Homepage After $sec Seconds.</div>";
-    header("refresh:$sec;url=index.php");
+function redirectHome($theMsg, $url = 'index.php', $sec = 2) {
+    echo $theMsg;
+    $link = 'Home Page';
+    if (strtolower($url) == 'back' and isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])) {
+        $url = $_SERVER['HTTP_REFERER'];
+        $link = 'Previous Page';
+    }
+    echo "<div class='alert alert-info'> You Will Be Redirect To $link After $sec Seconds.</div>";
+    header("refresh:$sec;url=$url");
     exit();
 }
 

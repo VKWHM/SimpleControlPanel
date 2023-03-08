@@ -141,14 +141,15 @@
 
                         $stmt = $db->prepare("INSERT INTO users (Username, Email, FullName, Password) VALUES (:user, :email, :fname, :pass);");
                         $stmt->execute($argument);
-                        echo "<div class='alert alert-success'>" .$stmt->rowCount() . " Record Inserted". "</div>";
+                        $msg =  "<div class='alert alert-success'>" .$stmt->rowCount() . " Record Inserted". "</div>";
+                        redirectHome($msg, 'back');
                     } ?>
 
                 </div>
 
             <?php } else {
-                    $msg = 'Sorry You Can\'t Browse This Page Directly';
-                    redirect_home($msg);
+                    $msg = '<div class="alert alert-danger">Sorry You Can\'t Browse This Page Directly</div>';
+                    redirectHome($msg);
                 }
                 break;
             case "Edit":
@@ -213,8 +214,8 @@
                         </form>
                     </div>
                 <?php } else {
-                        $msg =  "Theres No Such ID";
-                        redirect_home($msg, 3);
+                        $msg =  "<div class='alert alert-danger'>Theres No Such ID</div>";
+                        redirectHome($msg, 'back', 3);
                     }
                     break;
             case "Update": ?>
@@ -259,19 +260,20 @@
                     } else {
                         // Password Trick
                         $hashPass = empty($_POST["newPassword"]) ? $_POST['oldPassword'] : password_hash($_POST['newPassword'], PASSWORD_BCRYPT);
-                        $argument = array($username, $email, $fname, $hashPass);
+                        $argument = array($username, $email, $fname, $hashPass, $id);
                         // Update Data
 
                         $stmt = $db->prepare("UPDATE users SET Username = ?, Email = ?, FullName = ?, Password = ? WHERE UserID = ?");
                         $stmt->execute($argument);
-                        echo "<div class='alert alert-success'>" .$stmt->rowCount() . " Record Updated". "</div>";
+                        $msg =  "<div class='alert alert-success'>" .$stmt->rowCount() . " Record Updated". "</div>";
+                        redirectHome($msg, 'back');
                     } ?>
 
                 </div>
 
             <?php } else {
-                    $msg = 'Sorry You Can\'t Browse This Page Directly';
-                    redirect_home($msg);
+                    $msg = '<div class="alert alert-danger">Sorry You Can\'t Browse This Page Directly</div>';
+                    redirectHome($msg);
                 }
                 break;
             case "Delete": ?>
@@ -287,10 +289,11 @@
                     $stmt->bindParam(':userID', $userid);
                     $stmt->execute();
                     $count = $stmt->rowCount();
-                    echo "<div class='alert alert-success'>$count Record Deleted</div>";
+                    $msg =  "<div class='alert alert-success'>$count Record Deleted</div>";
+                    redirectHome($msg, 'back');
                 } else {
-                    $msg =  "There No Such ID Found";
-                    redirect_home($msg, 3);
+                    $msg =  "<div class='alert alert-danger'>There No Such ID Found</div>";
+                    redirectHome($msg, 'back');
                 } ?>
                 </div>
           <?php break;
