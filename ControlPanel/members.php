@@ -148,8 +148,10 @@
                 </div>
 
             <?php } else {
+                    echo "<div class='container'>";
                     $msg = '<div class="alert alert-danger">Sorry You Can\'t Browse This Page Directly</div>';
                     redirectHome($msg);
+                    echo "</div>";
                 }
                 break;
             case "Edit":
@@ -272,8 +274,10 @@
                 </div>
 
             <?php } else {
+                    echo "<div class='container'>";
                     $msg = '<div class="alert alert-danger">Sorry You Can\'t Browse This Page Directly</div>';
                     redirectHome($msg);
+                    echo "</div>";
                 }
                 break;
             case "Delete": ?>
