@@ -5,7 +5,11 @@
         exit();
     }
     $pageTitle = "Dashboard";
-    include "ini.php"; ?>
+    include "ini.php";
+    
+
+?>
+
     <div class="home-stats">
         <div class="container text-center">
             <h1>Dashboard</h1>
@@ -13,7 +17,7 @@
                 <div class="col-md-3">
                     <div class="stat">
                     Total Members
-                    <span>200</span>
+                    <span><?php echo countItems('users', 'UserID'); ?></span>
                     </div>
                 </div>
                 <div class="col-md-3">
