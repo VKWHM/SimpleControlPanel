@@ -301,6 +301,24 @@
                 } ?>
                 </div>
           <?php break;
+            case "Activate": ?>
+                <h1 class="text-center">Activate Member</h1>
+                <div class="container">
+          <?php // Check If UserID is Integer And Check If It Exist In Database
+                $userid = isset($_GET["userid"]) && is_numeric($_GET['userid']) ? (int)$_GET['userid'] : 0;
+                if (checkItem('UserID', 'users', $userid)) {
+                    $stmt = $db->prepare('UPDATE users SET RegStatus = 1 WHERE UserID = :userID;');
+                    $stmt->bindParam(':userID', $userid);
+                    $stmt->execute();
+                    $count = $stmt->rowCount();
+                    $msg =  "<div class='alert alert-success'>$count Record Updated</div>";
+                    redirectHome($msg, 'back');
+                } else {
+                    $msg =  "<div class='alert alert-danger'>There No Such ID Found</div>";
+                    redirectHome($msg, 'back');
+                } ?>
+                </div>
+          <?php break;
             case "Manage": // Manage Members Page
             default: 
                 // Select All Users Expect Admins
@@ -335,7 +353,7 @@
                                     <a class="btn btn-success" href="members.php?do=Edit&userid=<?php echo $row['UserID'] ?>"><i class='fa fa-edit'></i> Edit</a>
                                     <a class="btn btn-danger confirm" href="members.php?do=Delete&userid=<?php echo $row['UserID'] ?>"><i class='fa fa-close'></i> Delete</a>
                                 <?php if (!$row['RegStatus']) { ?>
-                                    <a class="btn btn-info" href=""><i class='fa fa-edit'></i> Activate</a>
+                                    <a class="btn btn-info" href="members.php?do=Activate&userid=<?php echo $row['UserID'] ?>"><i class='fa fa-edit'></i> Activate</a>
                                 <?php } ?>
                                 </td>
                             </tr>
@@ -347,6 +365,5 @@
             </div>
       <?php break;
     }
-
 
     include $tpl . "footer.php";
