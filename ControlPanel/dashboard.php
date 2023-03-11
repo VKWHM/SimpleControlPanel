@@ -53,11 +53,25 @@
                             Latest <?php echo $latestItems ?> Registered Users
                         </div>
                         <div class="panel-body">
-                        <?php
-                            foreach ($latestUsers as $user) {
-                                echo $user['Username'] . '</br>';
-                            }
-                        ?>
+                        <ul class='list-unstyled latest-users'>
+                            <?php foreach( $latestUsers as $user ) { ?>
+                                <li>
+                                    <?php echo $user['Username']; ?>
+                                    <a href="members.php?do=Edit&userid=<?php echo $user['UserID']; ?>">
+                                        <span class='btn btn-success pull-right'>
+                                            <i class="fa fa-edit"></i> Edit
+                                        </span>
+                                    </a>
+                                    <?php if (!$user['RegStatus']) { ?>
+                                        <a href="members.php?do=Activate&userid=<?php echo $user['UserID']; ?>">
+                                            <span class='btn btn-info pull-right'>
+                                                <i class="fa fa-check"></i> Activate
+                                            </span>
+                                        </a>
+                                    <?php } ?>
+                                </li>
+                            <?php } ?>
+                        </ul>
                         </div>
                     </div>
                 </div>

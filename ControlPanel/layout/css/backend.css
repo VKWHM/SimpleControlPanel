@@ -125,6 +125,19 @@ h1 {
 .latest {
     margin-top: 25px;
 }
+.latest .latest-users li{
+    padding: 5px 8px;
+    overflow: hidden
+}
+.latest .latest-users li:nth-child(odd) {
+    background-color: #EEE;
+}
+.latest .latest-users .btn {
+    padding: 2px 7px;
+}
+.latest .latest-users .btn-info {
+    margin-right: 3px;
+}
 /* End Dashboard Page */
 
 

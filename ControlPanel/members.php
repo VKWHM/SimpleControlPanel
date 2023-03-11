@@ -353,7 +353,7 @@
                                     <a class="btn btn-success" href="members.php?do=Edit&userid=<?php echo $row['UserID'] ?>"><i class='fa fa-edit'></i> Edit</a>
                                     <a class="btn btn-danger confirm" href="members.php?do=Delete&userid=<?php echo $row['UserID'] ?>"><i class='fa fa-close'></i> Delete</a>
                                 <?php if (!$row['RegStatus']) { ?>
-                                    <a class="btn btn-info" href="members.php?do=Activate&userid=<?php echo $row['UserID'] ?>"><i class='fa fa-edit'></i> Activate</a>
+                                    <a class="btn btn-info" href="members.php?do=Activate&userid=<?php echo $row['UserID'] ?>"><i class='fa fa-check'></i> Activate</a>
                                 <?php } ?>
                                 </td>
                             </tr>
