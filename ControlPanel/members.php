@@ -113,7 +113,7 @@
                     if (empty($email)) {
                         $formErrors[] = 'Email Cant Be empty';
                     }
-                        
+
                     if (!preg_match('/[a-zA-Z0-9\.]{1,}@[a-zA-Z0-9]{1,}\.[a-z]{1,}/', $email)) {
                         $formErrors[] = 'Invaild Email';
                     }
@@ -139,7 +139,7 @@
                         );
                         // Update Data
 
-                        $stmt = $db->prepare("INSERT INTO users (Username, Email, FullName, Password, DateTime) VALUES (:user, :email, :fname, :pass, now());");
+                        $stmt = $db->prepare("INSERT INTO users (Username, Email, FullName, Password, DateTime, RegStatus) VALUES (:user, :email, :fname, :pass, now(), 1);");
                         $stmt->execute($argument);
                         $msg =  "<div class='alert alert-success'>" .$stmt->rowCount() . " Record Inserted". "</div>";
                         redirectHome($msg, 'back');
