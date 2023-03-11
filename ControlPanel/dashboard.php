@@ -23,7 +23,7 @@
                 <div class="col-md-3">
                     <div class="stat st-pending">
                     Pending Members
-                    <a href="members.php?do=Manage&page=Pending"><span>25</span></a>
+                    <a href="members.php?do=Manage&page=Pending"><span><?php echo countItems('users', 'RegStatus', '0') ?></span></a>
                     </div>
                 </div>
                 <div class="col-md-3">

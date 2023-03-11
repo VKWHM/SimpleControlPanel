@@ -23,6 +23,7 @@
  * $url = The Link You Want To Redirect To
  * $seconds = Seconds Before Redirecting
  */
+
 function redirectHome($theMsg, $url = 'index.php', $sec = 2) {
     echo $theMsg;
     $link = 'Home Page';
@@ -36,33 +37,32 @@ function redirectHome($theMsg, $url = 'index.php', $sec = 2) {
 }
 
 /*
- * Check Items Function v1.0
+ * Check Items Function v1.1
  * Function to Check Item In Database [ Function Accept Parameters ]
  * $select = The Item To Select [ Example: user, item, category ]
  * $from = The Table To Select From [Example: users, categorys, items]
  * $where = The Value Of Select [ Example: osama, Electronics, Box ]
  */
+
 function checkItem($select, $from, $value) {
     global $db;
     $statement = $db->prepare("SELECT $select FROM $from WHERE $select = :value;");
     $statement->execute(array('value' => $value));
     $count = $statement->rowCount();
-    if ($count != 0) {
-        return True;
-    } 
-    return False;
+    return $count;
 }
 
-
 /*
- * Count Number Of Items Function v1.0
+ * Count Number Of Items Function v2.0
  * Function To Count Number Of Items Rows
  * $table = The Table To Choose From
  * $item = The Item To Count (Default Value '*')
  */
-function countItems($table, $item = '*') {
+
+function countItems($table, $item = '*', $where = null) {
     global $db;
-    $statement = $db->prepare("SELECT COUNT($item) FROM $table;");
+    $where = isset($where) ? "WHERE $item = $where" : "";
+    $statement = $db->prepare("SELECT COUNT($item) FROM $table $where;");
     $statement->execute();
     return $statement->fetchColumn();
 }
