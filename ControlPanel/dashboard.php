@@ -6,7 +6,8 @@
     }
     $pageTitle = "Dashboard";
     include "ini.php";
-    
+    $latestItems = 3;
+    $latestUsers = getLatest('*', 'users', 'UserID', $latestItems);
 
 ?>
 
@@ -49,10 +50,14 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-users"></i>
-                            Latest Registered Users
+                            Latest <?php echo $latestItems ?> Registered Users
                         </div>
                         <div class="panel-body">
-                            Test
+                        <?php
+                            foreach ($latestUsers as $user) {
+                                echo $user['Username'] . '</br>';
+                            }
+                        ?>
                         </div>
                     </div>
                 </div>
