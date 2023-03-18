@@ -166,7 +166,41 @@ h1 {
 /* End Members Page Table */
 
 /* Start Categories Page Table */
+.categories .panel-body {
+    padding: 0px;
+}
+.categories .cat {
+    padding:  15px;
+    overflow: hidden;
+    position: relative;
+}
 
+.categories .hidden-btn a:last-of-type {
+    transition: all .5s ease-in-out;
+    position: absolute;
+    top: 10px;
+    right: -120px;
+}
+.categories .hidden-btn a:first-of-type {
+    transition: all .7s ease-in-out;
+    position: absolute;
+    top: 10px;
+    right: -120px;
+}
+.categories .cat:hover .hidden-btn a:last-of-type {
+    right: 10px;
+}
+.categories .cat:hover .hidden-btn a:first-of-type {
+    right: 75px;
+}
+.categories .cat:hover {
+    background-color: #EEE;
+}
+.categories hr {
+    margin: 0 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
 .categories .cat h3 {
     margin: 0 0 10px;
 }
@@ -174,7 +208,7 @@ h1 {
     display: none;
 }
 .categories .cat span {
-    padding: 7px 10px;
+    padding: 6px 10px;
     border-radius: 8px;
     color: #FFF;
     margin-right: 5px;

@@ -178,6 +178,10 @@
                     <div class="panel-body">
                         <?php foreach ($result as $row) { ?>
                             <div class="cat">
+                                <div class="hidden-btn">
+                                    <a class="btn btn-xs btn-primary" href=""><i class="fa fa-edit"></i> Edit</a>
+                                    <a class="btn btn-xs btn-danger" href=""><i class="fa fa-close"></i> Delete</a>
+                                </div>
                                 <h3><?php echo $row['Name'] ?></h3>
                                 <p><?php echo $row['Description'] ?></p>
                                 <?php echo $row['Visibility'] ? "<span class='vis'>Hidden</span>" : "" ?>
