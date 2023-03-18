@@ -166,6 +166,13 @@ h1 {
 /* End Members Page Table */
 
 /* Start Categories Page Table */
+.categories .orders a {
+    color: #888;
+    text-decoration: none;
+}
+.categories .orders .active {
+    color: #F00;
+}
 .categories .panel-body {
     padding: 0px;
 }

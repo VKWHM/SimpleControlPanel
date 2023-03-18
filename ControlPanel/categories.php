@@ -168,13 +168,20 @@
         case "Delete":
         case "Manager":
         default: 
-            $stmt = $db->prepare('SELECT * FROM categories ORDER BY ordering;');
+            $sortList = array('ASC', 'DESC');
+            $sort = isset($_GET['sort']) && in_array($_GET['sort'], $sortList) ? $_GET['sort'] : $sortList[0];
+            $stmt = $db->prepare("SELECT * FROM categories ORDER BY ordering $sort;");
             $stmt->execute();
             $result = $stmt->fetchAll(); ?>
             <h1 class="text-center">Manage Categories</h1>
             <div class="container categories">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Manage Categories</div>
+                    <div class="panel-heading">Manage Categories
+                        <div class="orders pull-right">
+                        <a class="<?php echo $sort === 'ASC' ? 'active' : '' ?>" href="?sort=ASC">Asc</a> |
+                            <a class="<?php echo $sort === 'DESC' ? 'active' : '' ?>" href="?sort=DESC">Desc</a>
+                        </div>
+                    </div>
                     <div class="panel-body">
                         <?php foreach ($result as $row) { ?>
                             <div class="cat">
