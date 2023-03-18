@@ -127,7 +127,8 @@
 
                     if ($formErrors) {
                         foreach ($formErrors as $error) {
-                            echo "<div class='alert alert-danger'>$error</div>";
+                            $msg =  "<div class='alert alert-danger'>$error</div>";
+                            redirectHome($msg);
                         }
                     } else {
                         $hashPass = password_hash($password, PASSWORD_BCRYPT);
@@ -260,7 +261,8 @@
 
                     if ($formErrors) {
                         foreach ($formErrors as $error) {
-                            echo "<div class='alert alert-danger'>$error</div>";
+                            $msg =  "<div class='alert alert-danger'>$error</div>";
+                            redirectHome($msg);
                         }
                     } else {
                         // Password Trick
