@@ -51,7 +51,7 @@
                             <label class="col-sm-2 col-sm-offset-1 control-label" for="">Visible</label>
                             <div class="col-sm-7">
                                 <div>
-                                    <input id='vis-yes' type="radio" name="visibility" value="0">
+                                    <input id='vis-yes' type="radio" name="visibility" value="0" checked>
                                     <label for="vis-yes">Yes</label>
                                 </div>
                                 <div>
@@ -66,7 +66,7 @@
                             <label class="col-sm-2 col-sm-offset-1 control-label" for="">Allow Commenting</label>
                             <div class="col-sm-7">
                                 <div>
-                                    <input id='com-yes' type="radio" name="commenting" value="0">
+                                    <input id='com-yes' type="radio" name="commenting" value="0" checked>
                                     <label for="com-yes">Yes</label>
                                 </div>
                                 <div>
@@ -81,7 +81,7 @@
                             <label class="col-sm-2 col-sm-offset-1 control-label" for="">Allow Ads</label>
                             <div class="col-sm-7">
                                 <div>
-                                    <input id='ads-yes' type="radio" name="ads" value="0">
+                                    <input id='ads-yes' type="radio" name="ads" value="0" checked>
                                     <label for="ads-yes">Yes</label>
                                 </div>
                                 <div>
@@ -102,6 +102,67 @@
                     </form>
                 </div>
       <?php break;
+        case "Insert": ?>
+            <h1 class="text-center">Insert Categorie</h1>
+            <div class="container">
+
+        <?php if ($_SERVER['REQUEST_METHOD'] === "POST") {
+                // Get Post Item
+                $name = $_POST["name"];
+                $description = $_POST["description"];
+                $order = (int)$_POST["ordering"];
+                $visible = $_POST["visibility"];
+                $comment = $_POST["commenting"];
+                $ads = $_POST["ads"];
+
+                // Validate Form
+
+                $formErrors = array();
+                
+
+                if (empty($name)) {
+                    $formErrors[] = 'Categorie Name Cant Be Empty'; 
+                }
+
+                if (empty($description)) {
+                    $formErrors[] = 'Description Cant Be empty';
+                }
+
+
+                if (checkItem('Name', 'categories', $name)) {
+                    $formErrors[] = 'The Categorie Name Must Be Exists';
+                }
+
+                if ($formErrors) {
+                    foreach ($formErrors as $error) {
+                        echo "<div class='alert alert-danger'>$error</div>";
+                    }
+                } else {
+                    $argument = array(
+                        'name' => $name,
+                        'desc' => $description,
+                        'order' => $order,
+                        'vis' => $visible,
+                        'com' => $comment,
+                        'ads' => $ads
+                    );
+                    // Update Data
+
+                    $stmt = $db->prepare("INSERT INTO categories (Name, Description, Ordering, Visibility, Allow_Comment, Allow_Ads) VALUES (:name, :desc, :order, :vis, :com, :ads);");
+                    $stmt->execute($argument);
+                    $msg =  "<div class='alert alert-success'>" .$stmt->rowCount() . " Record Inserted". "</div>";
+                    redirectHome($msg, 'back');
+                } ?>
+
+            </div>
+
+        <?php } else {
+                echo "<div class='container'>";
+                $msg = '<div class="alert alert-danger">Sorry You Can\'t Browse This Page Directly</div>';
+                redirectHome($msg);
+                echo "</div>";
+            }
+            break;
         case "Update":
         case "Activate":
         case "Delete":
