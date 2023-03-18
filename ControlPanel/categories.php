@@ -167,9 +167,29 @@
         case "Activate":
         case "Delete":
         case "Manager":
-        default:
-            $a = '';
-    }
+        default: 
+            $stmt = $db->prepare('SELECT * FROM categories ORDER BY ordering;');
+            $stmt->execute();
+            $result = $stmt->fetchAll(); ?>
+            <h1 class="text-center">Manage Categories</h1>
+            <div class="container categories">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Manage Categories</div>
+                    <div class="panel-body">
+                        <?php foreach ($result as $row) { ?>
+                            <div class="cat">
+                                <h3><?php echo $row['Name'] ?></h3>
+                                <p><?php echo $row['Description'] ?></p>
+                                <?php echo $row['Visibility'] ? "<span class='vis'>Hidden</span>" : "" ?>
+                                <?php echo $row['Allow_Ads'] ? "<span class='ads'>Ads Disabled</span>" : "" ?>
+                                <?php echo $row['Allow_Comment'] ? "<span class='com'>Comment Disabled</span>" : "" ?>
+                            </div>
+                            <hr>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+<?php }
 
 
     include $tpl . 'footer.php';
